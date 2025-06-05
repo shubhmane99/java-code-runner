@@ -162,6 +162,31 @@ app.get("/test-javac", async (req, res) => {
     res.json({ error: err.message, stderr: err.stderr });
   }
 });
+app.get("/test-java", async (req, res) => {
+  const testDir = "/app/tmp/test";
+  const testFile = path.join(testDir, "Solution.java");
+  const outDir = "/app/java-out";
+
+  fs.mkdirSync(testDir, { recursive: true });
+  fs.mkdirSync(outDir, { recursive: true });
+
+  const javaCode = `
+  public class Solution {
+      public static void main(String[] args) {
+          System.out.println("Hello Test");
+      }
+  }
+  `;
+  fs.writeFileSync(testFile, javaCode);
+
+  try {
+    const compile = await execCommand(`javac -d ${outDir} ${testFile}`);
+    const run = await execCommand(`java -cp ${outDir} Solution`);
+    res.json({ compile, run });
+  } catch (e) {
+    res.json({ error: e });
+  }
+});
 
 
 const PORT = 5000;
