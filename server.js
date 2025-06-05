@@ -164,7 +164,8 @@ app.get("/test-javac", async (req, res) => {
 });
 
 app.get("/test-java", async (req, res) => {
-  const testDir = "/tmp/test-java";
+  const testDir = "/app/tmp"; // /app is your container's working dir
+
   const testFile = path.join(testDir, "Solution.java");
 
   fs.mkdirSync(testDir, { recursive: true });
