@@ -18,7 +18,7 @@ function normalize(str) {
 
 function execCommand(command) {
   return new Promise((resolve, reject) => {
-    exec(command, { timeout: 5000 }, (err, stdout, stderr) => {
+    exec(`/bin/bash -c "${command}"`, { timeout: 5000 }, (err, stdout, stderr) => {
       if (err) {
         reject({ message: err.message, stderr, stdout });
       } else {
@@ -27,6 +27,7 @@ function execCommand(command) {
     });
   });
 }
+
 
 app.post("/run", async (req, res) => {
   const { code, questionId, userId ,testCases } = req.body;
