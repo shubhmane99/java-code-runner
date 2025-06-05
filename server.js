@@ -37,8 +37,11 @@ app.post("/run", async (req, res) => {
 
   // Create unique directory
   const uid = `${Date.now()}_${Math.floor(Math.random() * 1000)}`;
-  const tempDir = path.join("/tmp", userId);
-  fs.mkdirSync(tempDir, { recursive: true });
+  const tempDir = "/tmp/java-run";
+fs.mkdirSync(tempDir, { recursive: true });
+
+  // const tempDir = path.join("/tmp", userId);
+  // fs.mkdirSync(tempDir, { recursive: true });
 
   const javaFile = path.join(tempDir, "Solution.java");
 
@@ -50,6 +53,8 @@ fs.writeFileSync(javaFile, normalizedCode, { encoding: "utf8" });
   console.log("Code written to file:\n", fs.readFileSync(javaFile, "utf-8"));
   const stat = fs.statSync(javaFile);
 console.log("File permissions:", stat.mode.toString(8)); 
+const { stdout: lsOut } = await execCommand(`ls -l /tmp/java-run`);
+console.log("Directory listing of /tmp/java-run:", lsOut);
 
   const cases = testCases;
 
