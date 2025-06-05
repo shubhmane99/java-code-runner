@@ -179,8 +179,11 @@ app.get("/test-java", async (req, res) => {
   fs.writeFileSync(testFile, javaCode);
 
   try {
-    const compile = await execCommand(`javac ${testFile}`);
-    const run = await execCommand(`java -cp ${testDir} Solution`);
+   const javaPath = "/usr/lib/jvm/java-17-openjdk-amd64/bin";
+
+const compile = await execCommand(`${javaPath}/javac ${testFile}`);
+const run = await execCommand(`${javaPath}/java -cp ${testDir} Solution`);
+
     res.json({ compile, run });
   } catch (e) {
     res.json({ error: e });
