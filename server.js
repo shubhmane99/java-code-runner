@@ -175,7 +175,6 @@ app.get("/test-javac", async (req, res) => {
     res.json({ error: err.message, stderr: err.stderr });
   }
 });
-
 app.get("/test-java", async (req, res) => {
   const testDir = "/app/tmp";
   const testFile = path.join(testDir, "Solution.java");
@@ -193,14 +192,16 @@ app.get("/test-java", async (req, res) => {
 
   try {
     const javaPath = "/usr/lib/jvm/java-17-openjdk-amd64/bin";
-    // Run Java file directly without compile
-    const run = await execCommand(`${javaPath}/java ${testFile}`);
+
+    // Run java inside the directory and run single-file java
+    const run = await execCommand(`cd ${testDir} && ${javaPath}/java Solution.java`);
 
     res.json({ run });
   } catch (e) {
     res.json({ error: e.message || e });
   }
 });
+
 
 
 
