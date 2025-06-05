@@ -9,6 +9,19 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
+
+console.log('Test directory exists:', fs.existsSync(testDir));
+console.log('Test directory stats:', fs.statSync(testDir));
+console.log('Node.js process UID:', process.getuid && process.getuid());
+console.log('Try writing dummy file...');
+fs.writeFileSync(path.join(testDir, 'dummy.txt'), 'hello');
+
+exec('/usr/lib/jvm/java-17-openjdk-amd64/bin/javac -version', (err, stdout, stderr) => {
+  console.log('Javac version stdout:', stdout);
+  console.log('Javac version stderr:', stderr);
+  if (err) console.error('Javac version error:', err);
+});
+
 function normalize(str) {
   return str
     .trim()
@@ -182,7 +195,8 @@ app.get("/test-java", async (req, res) => {
   try {
    const javaPath = "/usr/lib/jvm/java-17-openjdk-amd64/bin";
 
-const compile = await execCommand(`${javaPath}/javac ${testFile}`);
+const compile = await execCommand(`${javaPath}/javac -verbose ${testFile}`);
+
 const run = await execCommand(`${javaPath}/java -cp ${testDir} Solution`);
 
     res.json({ compile, run });
