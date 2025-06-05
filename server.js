@@ -131,6 +131,17 @@ app.get("/check-java", async (req, res) => {
   });
 });
 
+app.get("/debug-env", async (req, res) => {
+  const { exec } = require("child_process");
+
+  exec("echo $PATH && which javac && javac -version", (err, stdout, stderr) => {
+    if (err) {
+      return res.status(500).json({ error: err.message, stderr });
+    }
+    res.send(`<pre>${stdout}\n${stderr}</pre>`);
+  });
+});
+
 
 const PORT = 5000;
 app.listen(PORT, () => console.log(`Java Executor API running on port ${PORT}`));
