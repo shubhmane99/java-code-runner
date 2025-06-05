@@ -162,13 +162,12 @@ app.get("/test-javac", async (req, res) => {
     res.json({ error: err.message, stderr: err.stderr });
   }
 });
+
 app.get("/test-java", async (req, res) => {
   const testDir = "/app/tmp/test";
   const testFile = path.join(testDir, "Solution.java");
-  const outDir = "/app/java-out";
 
   fs.mkdirSync(testDir, { recursive: true });
-  fs.mkdirSync(outDir, { recursive: true });
 
   const javaCode = `
   public class Solution {
@@ -180,13 +179,18 @@ app.get("/test-java", async (req, res) => {
   fs.writeFileSync(testFile, javaCode);
 
   try {
-    const compile = await execCommand(`javac -d ${outDir} ${testFile}`);
-    const run = await execCommand(`java -cp ${outDir} Solution`);
+    // Compile without -d (output goes to same folder)
+    const compile = await execCommand(`javac ${testFile}`);
+    
+    // Run using -cp to same directory
+    const run = await execCommand(`java -cp ${testDir} Solution`);
+
     res.json({ compile, run });
   } catch (e) {
     res.json({ error: e });
   }
 });
+
 
 
 const PORT = 5000;
