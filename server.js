@@ -57,8 +57,8 @@ fs.writeFileSync(javaFile, normalizedCode, { encoding: "utf8" });
   console.log("Code written to file:\n", fs.readFileSync(javaFile, "utf-8"));
   const stat = fs.statSync(javaFile);
 console.log("File permissions:", stat.mode.toString(8)); 
-const { stdout: lsOut } = await execCommand(`ls -l /tmp/java-run`);
-console.log("Directory listing of /tmp/java-run:", lsOut);
+// const { stdout: lsOut } = await execCommand(`ls -l /tmp/java-run`);
+// console.log("Directory listing of /tmp/java-run:", lsOut);
 
   const cases = testCases;
 
