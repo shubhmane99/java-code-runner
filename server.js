@@ -195,11 +195,11 @@ app.get("/test-java", async (req, res) => {
   try {
    const javaPath = "/usr/lib/jvm/java-17-openjdk-amd64/bin";
 
-const compile = await execCommand(`${javaPath}/javac -verbose ${testFile}`);
+// const compile = await execCommand(`${javaPath}/javac -verbose ${testFile}`);
 
-const run = await execCommand(`${javaPath}/java -cp ${testDir} Solution`);
+const run = await execCommand(`${javaPath}/java -cp ${testFile}`);
 
-    res.json({ compile, run });
+    res.json({ run });
   } catch (e) {
     res.json({ error: e });
   }
