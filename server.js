@@ -55,6 +55,10 @@ app.post("/run", async (req, res) => {
     // Compile the Java code
     await execCommand(`javac ${javaFile}`);
   } catch (compileError) {
+    console.error("⛔️ Compilation Failed:");
+  console.error("stderr:", compileError.stderr);
+  console.error("stdout:", compileError.stdout);
+  console.error("message:", compileError.message);
     return res.json({
       results: cases.map((c, i) => ({
         id: i + 1,
