@@ -3,6 +3,7 @@ const cors = require("cors");
 const fs = require("fs");
 const { exec } = require("child_process");
 const path = require("path");
+const { statSync } = require("fs");
 
 const app = express();
 app.use(cors());
@@ -18,7 +19,7 @@ function normalize(str) {
 
 function execCommand(command) {
   return new Promise((resolve, reject) => {
-    exec(`/bin/bash -c "${command}"`, { timeout: 5000 }, (err, stdout, stderr) => {
+    exec(command, { timeout: 5000 }, (err, stdout, stderr) => {
       if (err) {
         reject({ message: err.message, stderr, stdout });
       } else {
@@ -44,6 +45,8 @@ app.post("/run", async (req, res) => {
   // Write user code to the unique directory
   fs.writeFileSync(javaFile, code);
   console.log("Code written to file:\n", fs.readFileSync(javaFile, "utf-8"));
+  
+console.log("File permissions:", statSync(javaFile));
 
   const cases = testCases;
 
