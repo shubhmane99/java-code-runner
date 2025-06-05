@@ -154,6 +154,14 @@ app.get("/debug-env", async (req, res) => {
     res.send(`<pre>${stdout}\n${stderr}</pre>`);
   });
 });
+app.get("/test-javac", async (req, res) => {
+  try {
+    const { stdout, stderr } = await execCommand("/usr/bin/javac -version");
+    res.json({ stdout, stderr });
+  } catch (err) {
+    res.json({ error: err.message, stderr: err.stderr });
+  }
+});
 
 
 const PORT = 5000;
