@@ -164,7 +164,7 @@ app.get("/test-javac", async (req, res) => {
 });
 
 app.get("/test-java", async (req, res) => {
-  const testDir = "/app/tmp/test";
+  const testDir = "/tmp/test-java";
   const testFile = path.join(testDir, "Solution.java");
 
   fs.mkdirSync(testDir, { recursive: true });
@@ -179,17 +179,14 @@ app.get("/test-java", async (req, res) => {
   fs.writeFileSync(testFile, javaCode);
 
   try {
-    // Compile without -d (output goes to same folder)
     const compile = await execCommand(`javac ${testFile}`);
-    
-    // Run using -cp to same directory
     const run = await execCommand(`java -cp ${testDir} Solution`);
-
     res.json({ compile, run });
   } catch (e) {
     res.json({ error: e });
   }
 });
+
 
 
 
