@@ -43,6 +43,7 @@ app.post("/run", async (req, res) => {
 
   // Write user code to the unique directory
   fs.writeFileSync(javaFile, code);
+  console.log("Code written to file:\n", fs.readFileSync(javaFile, "utf-8"));
 
   const cases = testCases;
 
