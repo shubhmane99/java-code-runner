@@ -37,16 +37,20 @@ app.post("/run", async (req, res) => {
 
   // Create unique directory
   const uid = `${Date.now()}_${Math.floor(Math.random() * 1000)}`;
-  const tempDir = "/tmp/java-run";
-fs.mkdirSync(tempDir, { recursive: true });
+//   const tempDir = "/tmp/java-run";
+// fs.mkdirSync(tempDir, { recursive: true });
 
   // const tempDir = path.join("/tmp", userId);
   // fs.mkdirSync(tempDir, { recursive: true });
+  const tempDir = path.join(__dirname, "tempJava");
+fs.mkdirSync(tempDir, { recursive: true });
+const javaFile = path.join(tempDir, "Solution.java");
 
-  const javaFile = path.join(tempDir, "Solution.java");
+
+  // const javaFile = path.join(tempDir, "Solution.java");
 
   // Write user code to the unique directory
-  // fs.writeFileSync(javaFile, code);
+  fs.writeFileSync(javaFile, code);
   const normalizedCode = code.replace(/\r\n/g, "\n");
 fs.writeFileSync(javaFile, normalizedCode, { encoding: "utf8" });
 
