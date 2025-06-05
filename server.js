@@ -175,6 +175,12 @@ app.get("/test-javac", async (req, res) => {
     res.json({ error: err.message, stderr: err.stderr });
   }
 });
+
+
+
+const fs = require('fs');
+const path = require('path');
+
 app.get("/test-java", async (req, res) => {
   const testDir = "/app/tmp";
   const testFile = path.join(testDir, "Solution.java");
@@ -190,23 +196,31 @@ app.get("/test-java", async (req, res) => {
   `;
   fs.writeFileSync(testFile, javaCode);
 
+  if (!fs.existsSync(testFile)) {
+    return res.json({ error: "Solution.java file does not exist after writing." });
+  }
+
   try {
     const javaPath = "/usr/lib/jvm/java-17-openjdk-amd64/bin";
 
+    // List files before compile
+    const lsBefore = await execCommand(`ls -l ${testDir}`);
+
     // Compile
     const compile = await execCommand(`cd ${testDir} && ${javaPath}/javac Solution.java`);
-    if (compile.stderr) {
-      return res.json({ compile, error: "Compilation error" });
-    }
 
-    // Run compiled class
+    // List files after compile
+    const lsAfter = await execCommand(`ls -l ${testDir}`);
+
+    // Run
     const run = await execCommand(`cd ${testDir} && ${javaPath}/java Solution`);
 
-    res.json({ compile, run });
+    res.json({ lsBefore, compile, lsAfter, run });
   } catch (e) {
     res.json({ error: e });
   }
 });
+
 
 
 
