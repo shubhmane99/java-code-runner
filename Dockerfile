@@ -19,7 +19,7 @@ RUN npm install
 COPY . .
 
 # Create temp folder for Java file execution
-RUN mkdir -p /app/tmp
+RUN mkdir -p /tmp
 
 # Expose backend port
 EXPOSE 5000
