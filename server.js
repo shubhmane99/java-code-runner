@@ -35,7 +35,7 @@ app.post("/run", async (req, res) => {
 
   // Create unique directory
   const uid = `${Date.now()}_${Math.floor(Math.random() * 1000)}`;
-  const tempDir = path.join("/temp", "tmp", userId);
+  const tempDir = path.join("/tmp", userId);
   fs.mkdirSync(tempDir, { recursive: true });
 
   const javaFile = path.join(tempDir, "Solution.java");
