@@ -179,47 +179,27 @@ app.get("/test-javac", async (req, res) => {
 
 
 
-
 app.get("/test-java", async (req, res) => {
   const testDir = "/app/tmp";
-  const testFile = path.join(testDir, "Solution.java");
-
-  fs.mkdirSync(testDir, { recursive: true });
-
-  const javaCode = `
-  public class Solution {
-      public static void main(String[] args) {
-          System.out.println("Hello Test");
-      }
-  }
-  `;
-  fs.writeFileSync(testFile, javaCode);
-
-  if (!fs.existsSync(testFile)) {
-    return res.json({ error: "Solution.java file does not exist after writing." });
-  }
+  const testFile = "Solution.java";
 
   try {
-    const lsTmp = await execCommand(`ls -l /app/tmp`);
-    // const javaPath = "/usr/lib/jvm/java-17-openjdk-amd64/bin";
+    // Compile command: run javac inside /app/tmp
+    const compile = await execCommand(
+      `cd ${testDir} && /usr/lib/jvm/java-17-openjdk-amd64/bin/javac ${testFile} 2>&1`
+    );
 
-    // // List files before compile
-    // const lsBefore = await execCommand(`ls -l ${testDir}`);
+    // Run command if compile succeeds
+    const run = await execCommand(
+      `cd ${testDir} && /usr/lib/jvm/java-17-openjdk-amd64/bin/java Solution 2>&1`
+    );
 
-    // // Compile
-    // const compile = await execCommand(`cd ${testDir} && ${javaPath}/javac Solution.java`);
-
-    // // List files after compile
-    // const lsAfter = await execCommand(`ls -l ${testDir}`);
-
-    // // Run
-    // const run = await execCommand(`cd ${testDir} && ${javaPath}/java Solution`);
-
-    res.json({lsTmp});
+    res.json({ compile, run });
   } catch (e) {
     res.json({ error: e });
   }
 });
+
 
 
 
