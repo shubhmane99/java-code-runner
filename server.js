@@ -200,6 +200,7 @@ app.get("/test-java", async (req, res) => {
   }
 
   try {
+    const lsTmp = await execCommand(`ls -l /app/tmp`);
     const javaPath = "/usr/lib/jvm/java-17-openjdk-amd64/bin";
 
     // List files before compile
@@ -214,7 +215,7 @@ app.get("/test-java", async (req, res) => {
     // Run
     const run = await execCommand(`cd ${testDir} && ${javaPath}/java Solution`);
 
-    res.json({ lsBefore, compile, lsAfter, run });
+    res.json({ lsBefore, compile, lsAfter, run ,lsTmp});
   } catch (e) {
     res.json({ error: e });
   }
