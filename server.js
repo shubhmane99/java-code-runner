@@ -178,27 +178,43 @@ app.get("/test-javac", async (req, res) => {
 
 
 
-
 app.get("/test-java", async (req, res) => {
   const testDir = "/app/tmp";
   const testFile = "Solution.java";
 
   try {
-    // Compile command: run javac inside /app/tmp
+    // Create directory if not exists
+    fs.mkdirSync(testDir, { recursive: true });
+
+    // Write Java code file
+    const javaCode = `
+    public class Solution {
+        public static void main(String[] args) {
+            System.out.println("Hello Test");
+        }
+    }
+    `;
+    fs.writeFileSync(path.join(testDir, testFile), javaCode);
+
+    // Verify directory contents (optional debug)
+    const ls = await execCommand(`ls -l ${testDir}`);
+
+    // Compile Java code
     const compile = await execCommand(
       `cd ${testDir} && /usr/lib/jvm/java-17-openjdk-amd64/bin/javac ${testFile} 2>&1`
     );
 
-    // Run command if compile succeeds
+    // Run Java program
     const run = await execCommand(
       `cd ${testDir} && /usr/lib/jvm/java-17-openjdk-amd64/bin/java Solution 2>&1`
     );
 
-    res.json({ compile, run });
+    res.json({ ls, compile, run });
   } catch (e) {
     res.json({ error: e });
   }
 });
+
 
 
 
