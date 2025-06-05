@@ -58,7 +58,8 @@ console.log("File permissions:", statSync(javaFile));
 
   try {
     // Compile the Java code
-    await execCommand(`javac ${javaFile}`);
+    // await execCommand(`javac ${javaFile}`);
+    await execCommand(`/usr/bin/javac ${javaFile}`);
   } catch (compileError) {
     console.error("⛔️ Compilation Failed:");
   console.error("stderr:", compileError.stderr);
