@@ -48,7 +48,7 @@ app.post("/run", async (req, res) => {
 fs.writeFileSync(javaFile, normalizedCode, { encoding: "utf8" });
 
   console.log("Code written to file:\n", fs.readFileSync(javaFile, "utf-8"));
-  
+  const stat = fs.statSync(javaFile);
 console.log("File permissions:", stat.mode.toString(8)); 
 
   const cases = testCases;
