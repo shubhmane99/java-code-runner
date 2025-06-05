@@ -201,21 +201,21 @@ app.get("/test-java", async (req, res) => {
 
   try {
     const lsTmp = await execCommand(`ls -l /app/tmp`);
-    const javaPath = "/usr/lib/jvm/java-17-openjdk-amd64/bin";
+    // const javaPath = "/usr/lib/jvm/java-17-openjdk-amd64/bin";
 
-    // List files before compile
-    const lsBefore = await execCommand(`ls -l ${testDir}`);
+    // // List files before compile
+    // const lsBefore = await execCommand(`ls -l ${testDir}`);
 
-    // Compile
-    const compile = await execCommand(`cd ${testDir} && ${javaPath}/javac Solution.java`);
+    // // Compile
+    // const compile = await execCommand(`cd ${testDir} && ${javaPath}/javac Solution.java`);
 
-    // List files after compile
-    const lsAfter = await execCommand(`ls -l ${testDir}`);
+    // // List files after compile
+    // const lsAfter = await execCommand(`ls -l ${testDir}`);
 
-    // Run
-    const run = await execCommand(`cd ${testDir} && ${javaPath}/java Solution`);
+    // // Run
+    // const run = await execCommand(`cd ${testDir} && ${javaPath}/java Solution`);
 
-    res.json({ lsBefore, compile, lsAfter, run ,lsTmp});
+    res.json({lsTmp});
   } catch (e) {
     res.json({ error: e });
   }
