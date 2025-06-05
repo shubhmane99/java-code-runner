@@ -111,6 +111,17 @@ app.post("/run", async (req, res) => {
   res.json({ results });
 });
 
+app.get("/check-java", async (req, res) => {
+  const { exec } = require("child_process");
+
+  exec("javac -version", (err, stdout, stderr) => {
+    if (err) {
+      return res.json({ installed: false, error: err.message, stderr });
+    }
+    res.json({ installed: true, version: stderr || stdout });
+  });
+});
+
 
 const PORT = 5000;
 app.listen(PORT, () => console.log(`Java Executor API running on port ${PORT}`));
