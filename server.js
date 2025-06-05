@@ -10,11 +10,11 @@ app.use(cors());
 app.use(express.json());
 
 
-console.log('Test directory exists:', fs.existsSync(testDir));
-console.log('Test directory stats:', fs.statSync(testDir));
-console.log('Node.js process UID:', process.getuid && process.getuid());
-console.log('Try writing dummy file...');
-fs.writeFileSync(path.join(testDir, 'dummy.txt'), 'hello');
+// console.log('Test directory exists:', fs.existsSync(testDir));
+// console.log('Test directory stats:', fs.statSync(testDir));
+// console.log('Node.js process UID:', process.getuid && process.getuid());
+// console.log('Try writing dummy file...');
+// fs.writeFileSync(path.join(testDir, 'dummy.txt'), 'hello');
 
 exec('/usr/lib/jvm/java-17-openjdk-amd64/bin/javac -version', (err, stdout, stderr) => {
   console.log('Javac version stdout:', stdout);
