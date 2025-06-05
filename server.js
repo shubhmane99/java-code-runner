@@ -43,10 +43,13 @@ app.post("/run", async (req, res) => {
   const javaFile = path.join(tempDir, "Solution.java");
 
   // Write user code to the unique directory
-  fs.writeFileSync(javaFile, code);
+  // fs.writeFileSync(javaFile, code);
+  const normalizedCode = code.replace(/\r\n/g, "\n");
+fs.writeFileSync(javaFile, normalizedCode, { encoding: "utf8" });
+
   console.log("Code written to file:\n", fs.readFileSync(javaFile, "utf-8"));
   
-console.log("File permissions:", statSync(javaFile));
+console.log("File permissions:", stat.mode.toString(8)); 
 
   const cases = testCases;
 
