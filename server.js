@@ -193,12 +193,18 @@ app.get("/test-java", async (req, res) => {
   try {
     const javaPath = "/usr/lib/jvm/java-17-openjdk-amd64/bin";
 
-    // Run java inside the directory and run single-file java
-    const run = await execCommand(`cd ${testDir} && ${javaPath}/java Solution.java`);
+    // Compile
+    const compile = await execCommand(`cd ${testDir} && ${javaPath}/javac Solution.java`);
+    if (compile.stderr) {
+      return res.json({ compile, error: "Compilation error" });
+    }
 
-    res.json({ run });
+    // Run compiled class
+    const run = await execCommand(`cd ${testDir} && ${javaPath}/java Solution`);
+
+    res.json({ compile, run });
   } catch (e) {
-    res.json({ error: e.message || e });
+    res.json({ error: e });
   }
 });
 
