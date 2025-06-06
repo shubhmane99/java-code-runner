@@ -51,7 +51,7 @@ ENV JAVA_HOME=/usr/lib/jvm/java-17-openjdk-amd64
 ENV PATH=$JAVA_HOME/bin:$PATH
 
 # Expose app port
-# EXPOSE 5000
+EXPOSE 3000
 
 # Start the server
 CMD ["node", "server.js"]
