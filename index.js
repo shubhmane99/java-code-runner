@@ -56,9 +56,9 @@ app.post("/run", async (req, res) => {
 //   const tempDir = "/tmp/java-run";
 // fs.mkdirSync(tempDir, { recursive: true });
 
-  // const tempDir = path.join("/tmp", userId);
+  const tempDir = path.join("/tmp", userId);
   // fs.mkdirSync(tempDir, { recursive: true });
-  const tempDir = path.join(__dirname, "tempJava");
+  // const tempDir = path.join(__dirname, "tempJava");
 fs.mkdirSync(tempDir, { recursive: true });
 const javaFile = path.join(tempDir, "Solution.java");
 
