@@ -9,9 +9,7 @@
 // app.use(cors());
 // app.use(express.json());
 
-// app.get("/", (req, res) => {
-//   res.send("API is up and running!");
-// });
+
 
 // // console.log('Test directory exists:', fs.existsSync(testDir));
 // // console.log('Test directory stats:', fs.statSync(testDir));
@@ -344,6 +342,10 @@ app.post("/run", async (req, res) => {
   }
 
   res.json({ results });
+});
+
+app.get("/", (req, res) => {
+  res.send("API is up and running!");
 });
 
 const PORT = process.env.PORT || 8080;
