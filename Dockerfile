@@ -55,6 +55,6 @@ EXPOSE 8080
 RUN mkdir -p /app/tmp && chmod -R 777 /app/tmp
 
 # Start the server
-CMD ["node", "start"]
+CMD ["npm", "start"]
 
 
