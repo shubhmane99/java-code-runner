@@ -348,8 +348,12 @@ app.get("/", (req, res) => {
   res.send("API is up and running!");
 });
 
-const PORT = process.env.PORT;
-app.listen(PORT, () => console.log(`Server running on port...shubham ${PORT}`));
+const PORT = process.env.PORT || process.argv[2] || 8080;
+
+app.listen(PORT, () =>
+  console.log(`Server running on port...shubham ${PORT}`)
+);
+
 
 
 
