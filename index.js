@@ -350,9 +350,10 @@ app.get("/", (req, res) => {
 
 const PORT = process.env.PORT || process.argv[2] || 8080;
 
-app.listen(PORT, () =>
+app.listen(PORT, '0.0.0.0', () =>
   console.log(`Server running on port...shubham ${PORT}`)
 );
+
 
 
 
