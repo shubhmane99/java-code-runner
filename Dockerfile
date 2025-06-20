@@ -52,6 +52,7 @@ ENV PATH=$JAVA_HOME/bin:$PATH
 
 # Expose app port
 EXPOSE 8080
+RUN mkdir -p /app/tmp && chmod -R 777 /app/tmp
 
 # Start the server
 CMD ["node", "index.js"]
