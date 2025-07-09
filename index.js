@@ -245,7 +245,6 @@ function normalize(str) {
   return str
     .trim()
     .replace(/\r\n/g, "\n")
-    .replace(/[ \t]+/g, " ")
     .replace(/\n+/g, "\n");
 }
 
@@ -307,7 +306,7 @@ app.post("/run", async (req, res) => {
       const { stdout } = await execCommand(
         `echo "${input}" | java -cp ${tempDir} Solution`
       );
-      const output = stdout.trim();
+      const output = stdout.replace(/\r\n/g, "\n").replace(/\n+$/, "");
 
       const passed = isPattern
         ? output === expected
